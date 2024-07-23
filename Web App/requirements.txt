@@ -1,6 +1,1 @@
-flask
-tensorflow
-keras
-python-dotenv
-waitress
-pillow
+keras==2.15.0
