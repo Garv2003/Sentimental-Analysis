@@ -1,3 +1,7 @@
+from tensorflow.keras.layers import Embedding, SimpleRNN, Dropout, Dense
+from tensorflow.keras.models import load_model, Sequential
+from tensorflow.keras import Sequential
+from tensorflow.keras.models import load_model, model_from_json
 from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy as np
 from tensorflow.keras.models import load_model
@@ -9,46 +13,21 @@ from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import re
-import json
-import h5py
-from tensorflow.keras.models import model_from_json
+
 # import os
 # os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-
 
 app = Flask(__name__)
 
 
-# def load_my_model(model_path):
-#     try:
-#         model = load_model(model_path)
-#         print("Model loaded successfully!")
-#         return model
-#     except OSError as e:
-#         print(f"Error loading model: {e}")
-#         return None
-
-def load_model_without_time_major(h5_path):
-    with h5py.File(h5_path, 'r') as f:
-        model_config = f.attrs.get('model_config')
-        if model_config:
-            model_config = json.loads(model_config.encode('utf-8'))
-            for layer in model_config['config']['layers']:
-                if 'time_major' in layer['config']:
-                    del layer['config']['time_major']
-            model = model_from_json(json.dumps(
-                model_config), custom_objects=custom_objects)
-            model.load_weights(h5_path)
-            return model
-        else:
-            raise ValueError("No model configuration found in .h5 file")
-
-
-custom_objects = {
-    'Sequential': Sequential,
-}
-
-model = load_model_without_time_major('Sentimental_analysis.h5')
+def load_my_model(model_path):
+    try:
+        model = load_model(model_path)
+        print("Model loaded successfully!")
+        return model
+    except OSError as e:
+        print(f"Error loading model: {e}")
+        return None
 
 
 def clean(text):
@@ -90,7 +69,8 @@ def clean_text(text):
     return text
 
 
-# model = load_my_model('Sentimental_analysis.h5')
+model = load_my_model('Sentimental_analysis.keras')
+
 max_sequence_length = 100
 
 
@@ -126,7 +106,7 @@ def predict():
 
     except Exception as e:
         print(f"Error predicting image: {e}")
-        return "<p id='prediction' class='flex items-center justify-center w-96 p-4 mt-4 bg-white shadow-md rounded-lg text-red-800 font-bold'>Error predicting image please try again</p>"
+        return "<p id='prediction' class='flex items-center justify-center w-96 p-4 mt-5 bg-white shadow-md rounded-lg text-red-800 font-bold'>Error predicting image please try again</p>"
 
 
 if __name__ == '__main__':

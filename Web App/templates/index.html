@@ -4,8 +4,8 @@
 <head>
     <title>Sentimental Analysis</title>
     <link href="{{url_for('static',filename='css/output.css')}}" rel="stylesheet">
-    <script src="https://unpkg.com/htmx.org@1.9.12"
-        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+    <script src="https://unpkg.com/htmx.org@2.0.1"
+        integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs/dist/cdn.min.js"></script>
 </head>
@@ -15,12 +15,14 @@
         <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
             Sentimental Analysis
         </h1>
-        <form method="POST" enctype="multipart/form-data" hx-post="/predict" hx-swap="afterend"
-            class="flex flex-col items-center justify-center gap-4 w-[450px] p-4 bg-white shadow-md rounded-lg">
+        <form method="POST" enctype="multipart/form-data" hx-post="/predict" hx-target="#result"
+            class="flex items-center justify-center gap-4 w-[500px] p-4 bg-white shadow-md rounded-lg">
             <input type="text" name="user_input" placeholder="Enter text"
                 class="w-full p-2 border border-gray-300 rounded-lg">
-            <input type="submit" value="Predict" class="w-full p-2 bg-blue-500 text-white rounded-lg">
+            <input type="submit" value="Predict" class="p-2 bg-blue-500 text-white rounded-lg">
         </form>
+        <div class="mt-4" id="result">
+        </div>
     </div>
     </div>
 </body>
