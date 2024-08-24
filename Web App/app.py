@@ -1,21 +1,13 @@
-from tensorflow.keras.layers import Embedding, SimpleRNN, Dropout, Dense
-from tensorflow.keras.models import load_model, Sequential
-from tensorflow.keras import Sequential
-from tensorflow.keras.models import load_model, model_from_json
-from tensorflow.keras.preprocessing.text import Tokenizer
-import numpy as np
 from tensorflow.keras.models import load_model
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
+from tensorflow.keras.preprocessing.text import Tokenizer
 from flask import Flask, render_template, request
-
+from tensorflow.keras.models import load_model
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import numpy as np
+import tensorflow as tf
 import re
-
-# import os
-# os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 app = Flask(__name__)
 
@@ -69,7 +61,7 @@ def clean_text(text):
     return text
 
 
-model = load_my_model('Sentimental_analysis.keras')
+model = load_my_model('./model/Sentimental_Analysis.keras')
 
 max_sequence_length = 100
 
